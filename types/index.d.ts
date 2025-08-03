@@ -1,4 +1,5 @@
 /// <reference types="node" />
+import { Duplex } from 'stream';
 import { IncomingMessage, ServerResponse, Server } from 'http';
 import { FastifyRequest, FastifyPluginCallback, RawServerBase, RawServerDefault, RawRequestDefaultExpression, RawReplyDefaultExpression, RequestGenericInterface, ContextConfigDefault, FastifyInstance, FastifySchema, FastifyTypeProvider, FastifyTypeProviderDefault, FastifyBaseLogger } from 'fastify';
 import * as fastify from 'fastify';
@@ -17,6 +18,7 @@ interface WebsocketRouteOptions<
   Logger extends FastifyBaseLogger = FastifyBaseLogger
 > {
   wsHandler?: fastifyWebsocket.WebsocketHandler<RawServer, RawRequest, RequestGeneric, ContextConfig, SchemaCompiler, TypeProvider, Logger>;
+  handleUpgradeRequest?: (request: FastifyRequest<RequestGeneric, RawServer, RawRequest, SchemaCompiler, TypeProvider, ContextConfig, Logger>, rawSocket: Duplex, socketHead: Buffer) => Promise<WebSocket.WebSocket>;
 }
 
 declare module 'fastify' {
